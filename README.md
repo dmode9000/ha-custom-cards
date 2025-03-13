@@ -7,7 +7,7 @@ Builds upon the excellent work of:
 - [config-template-card](https://github.com/iantrich/config-template-card) for templating capabilities
 - [apexcharts-card](https://github.com/RomRider/apexcharts-card) for advanced charting
 
-## PV power, export power, forecasted production, and grid voltage fluctuations.
+## PV power, export power, forecasted production, and grid voltage.
 ![image](https://github.com/user-attachments/assets/708172c3-0a40-4e0e-9903-35ba094ea490)
 
 ## PV power, battery SoC, forecasted production.
