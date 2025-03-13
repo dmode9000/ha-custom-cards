@@ -3,7 +3,7 @@
 
 
 Builds upon the excellent work of:
-- [LuxPython_DEV](https://github.com/guybw/LuxPython_DEV) for lux data processing
+- [LuxPython_DEV](https://github.com/guybw/LuxPython_DEV) for LuxPower inverter data processing
 - [config-template-card](https://github.com/iantrich/config-template-card) for templating capabilities
 - [apexcharts-card](https://github.com/RomRider/apexcharts-card) for advanced charting
 - [solcast-solar](https://github.com/BJReplay/ha-solcast-solar) for forecasting
