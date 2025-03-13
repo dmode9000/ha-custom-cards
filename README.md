@@ -1,4 +1,4 @@
-# A custom Home Assistant dashboard card that visualizes the relationship between solar PV power, export power, forecasted production, and grid voltage fluctuations in real-time.
+# A custom Home Assistant dashboard card that visualizes the relationship between solar PV power, export power, forecasted production, and grid voltage fluctuations.
 
 Builds upon the excellent work of:
 - [LuxPython_DEV](https://github.com/guybw/LuxPython_DEV) for lux data processing
