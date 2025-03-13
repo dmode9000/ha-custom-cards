@@ -1,0 +1,178 @@
+type: custom:apexcharts-card
+experimental:
+  hidden_by_default: true
+header:
+  title: Lux Temperature vs Power
+  show: true
+  show_states: true
+  colorize_states: true
+apex_config:
+  legend:
+    show: true
+  chart:
+    height: 300px
+    zoom:
+      enabled: true
+    toolbar:
+      show: true
+      tools:
+        zoom: true
+        zoomin: true
+        zoomout: true
+        pan: true
+        reset: true
+    autoScaleXaxis: true
+  tooltip:
+    enabled: true
+    shared: true
+    followCursor: true
+now:
+  show: true
+  label: now
+graph_span: 3d
+span:
+  start: day
+  offset: "-2day"
+yaxis:
+  - id: "%"
+    show: true
+    min: 20
+    max: 100
+    apex_config:
+      tickAmount: 4
+  - id: °C
+    show: true
+    min: 20
+    max: 55
+    apex_config:
+      tickAmount: 4
+  - id: kW
+    min: 0
+    max: 6
+    show: true
+    opposite: true
+    apex_config:
+      tickAmount: 4
+  - id: header_only
+    show: false
+series:
+  - entity: sensor.lux_internal_temperature_live
+    name: internal
+    type: line
+    stroke_width: 1
+    float_precision: 2
+    yaxis_id: °C
+    unit: °C
+    extend_to: now
+    show:
+      extremas: true
+      legend_value: false
+      in_header: true
+    group_by:
+      func: avg
+      duration: 5m
+  - entity: sensor.lux_radiator_1_temperature_live
+    name: Rad1
+    type: line
+    stroke_width: 1
+    opacity: 1
+    float_precision: 2
+    yaxis_id: °C
+    unit: °C
+    extend_to: now
+    show:
+      extremas: true
+      legend_value: false
+      in_header: true
+    group_by:
+      func: avg
+      duration: 5m
+  - entity: sensor.lux_radiator_2_temperature_live
+    name: Rad2
+    type: line
+    stroke_width: 1
+    opacity: 1
+    float_precision: 2
+    yaxis_id: °C
+    unit: °C
+    extend_to: now
+    show:
+      extremas: true
+      legend_value: false
+      in_header: true
+    group_by:
+      func: avg
+      duration: 5m
+  - entity: number.lux_fan_1_max_speed
+    name: Fan1
+    type: line
+    stroke_width: 1
+    opacity: 1
+    float_precision: 0
+    yaxis_id: "%"
+    unit: "%"
+    extend_to: now
+    curve: straight
+    show:
+      hidden_by_default: true
+      extremas: true
+      legend_value: false
+      in_header: false
+    group_by:
+      func: avg
+      duration: 5m
+  - entity: number.lux_fan_2_max_speed
+    name: Fan2
+    type: line
+    stroke_width: 1
+    opacity: 1
+    float_precision: 0
+    yaxis_id: "%"
+    unit: "%"
+    extend_to: now
+    curve: straight
+    show:
+      hidden_by_default: true
+      extremas: true
+      legend_value: false
+      in_header: false
+    group_by:
+      func: avg
+      duration: 5m
+  - entity: sensor.lux_power_from_inverter_live
+    name: P.Inv
+    type: area
+    stroke_width: 0
+    opacity: 0.3
+    float_precision: 2
+    yaxis_id: kW
+    unit: kW
+    color: Gray
+    transform: return (x / 1000);
+    extend_to: now
+    show:
+      extremas: false
+      legend_value: false
+      in_header: true
+    group_by:
+      func: avg
+      duration: 5m
+  - entity: sensor.lux_power_from_grid_live
+    name: P.Grid
+    type: area
+    stroke_width: 0
+    opacity: 0.3
+    float_precision: 2
+    yaxis_id: kW
+    unit: kW
+    color: Gray
+    transform: return (x / 1000);
+    extend_to: now
+    show:
+      extremas: false
+      legend_value: false
+      in_header: true
+      in_brush: true
+    group_by:
+      func: avg
+      duration: 5m
