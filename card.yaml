@@ -1,0 +1,314 @@
+type: custom:config-template-card
+experimental:
+  hidden_by_default: true
+entities:
+  - sensor.home_sun_setting
+  - sensor.home_sun_rising
+  - sensor.lux_battery_capacity_ah
+card:
+  type: custom:apexcharts-card
+  experimental:
+    color_threshold: true
+  header:
+    title: ""
+    show: true
+    show_states: true
+    colorize_states: true
+  apex_config:
+    grid:
+      show: true
+      borderColor: "#424242"
+    chart:
+      height: 500px
+    tooltip:
+      enabled: true
+      shared: true
+      followCursor: true
+    annotations:
+      position: back
+      yaxis:
+        - "y": 253
+          strokeDashArray: 2
+          borderColor: "#FFFF00"
+          borderWidth: 0.5
+          label:
+            borderColor: "#ADFF2F"
+            borderWidth: 0
+            borderRadius: 0
+            text: 250V
+            textAnchor: center
+            position: right
+            offsetX: -35
+            offsetY: 2
+            style:
+              background: transparent
+              color: "#FFFF00"
+              fontSize: 10px
+              fontWeight: 10
+              fontFamily: Segoe UI
+              cssClass: apexcharts-xaxis-annotation-label
+        - "y": 264.5
+          strokeDashArray: 2
+          borderColor: "#FF4500"
+          borderWidth: 0.5
+          label:
+            borderColor: "#ADFF2F"
+            borderWidth: 0
+            borderRadius: 0
+            text: 264.5V
+            textAnchor: center
+            position: right
+            offsetX: -35
+            offsetY: 1
+            style:
+              background: transparent
+              color: "#FF8C00"
+              fontSize: 10px
+              fontWeight: 10
+              fontFamily: Segoe UI
+              cssClass: apexcharts-xaxis-annotation-label
+      xaxis:
+        - x: ${new Date(states['sensor.home_sun_rising'].state).getTime()}
+          label:
+            text: >-
+              ${"☀️ " + new Date(new
+              Date(states['sensor.home_sun_rising'].state).getTime()).toLocaleTimeString([],{hour:
+              '2-digit', minute: '2-digit', hour12: false})}
+            borderWidth: 0
+            style:
+              background: "#0000"
+        - x: ${new Date(states['sensor.home_sun_setting'].state).getTime()}
+          label:
+            text: >-
+              ${"🌙 " + new Date(new
+              Date(states['sensor.home_sun_setting'].state).getTime()).toLocaleTimeString([],
+              {hour: '2-digit', minute: '2-digit', hour12: false})}
+            borderWidth: 0
+            style:
+              background: "#0000"
+        - x: ${new Date().getTime()}
+          label:
+            text: now
+            borderWidth: 0
+            style:
+              background: "#016a9a"
+  graph_span: 24h
+  span:
+    start: day
+  yaxis:
+    - id: voltage
+      show: true
+      opposite: true
+      decimals: 0
+      max: 250
+      min: 200
+      apex_config:
+        tickAmount: 5
+    - id: kWh
+      show: true
+      max: 8
+      min: 0
+      apex_config:
+        tickAmount: 5
+    - id: header_only
+      show: false
+  series:
+    - entity: sensor.voltage_l1
+      yaxis_id: voltage
+      name: Voltage L1
+      type: line
+      stroke_width: 0.2
+      opacity: 1
+      color: Gray
+      unit: V
+      extend_to: now
+      show:
+        hidden_by_default: true
+        extremas: false
+        legend_value: false
+        in_header: false
+      group_by:
+        func: max
+        duration: 3m
+    - entity: sensor.voltage_l2
+      yaxis_id: voltage
+      name: Voltage L2
+      type: line
+      stroke_width: 0.2
+      opacity: 1
+      color: Gray
+      unit: V
+      extend_to: now
+      show:
+        extremas: false
+        legend_value: false
+        in_header: false
+      group_by:
+        func: max
+        duration: 3m
+    - entity: sensor.voltage_l3
+      yaxis_id: voltage
+      name: Voltage L3
+      type: line
+      stroke_width: 0.2
+      opacity: 1
+      color: Gray
+      unit: V
+      extend_to: now
+      show:
+        extremas: false
+        legend_value: true
+        in_header: false
+      group_by:
+        func: max
+        duration: 3m
+    - entity: sensor.lux_grid_voltage_live
+      yaxis_id: voltage
+      name: Lux Voltage
+      type: line
+      stroke_width: 2
+      opacity: 1
+      float_precision: 0
+      color: Gray
+      unit: V
+      extend_to: now
+      color_threshold:
+        - value: 225
+          color: grey
+        - value: 230
+          color: orange
+        - value: 235
+          color: orangered
+        - value: 245
+          color: red
+      show:
+        extremas: true
+        legend_value: true
+        in_header: false
+      group_by:
+        func: max
+        duration: 3m
+    - entity: sensor.lux_solar_output_live
+      transform: return x / 1000;
+      name: Solar (avg30m)
+      type: line
+      stroke_width: 2
+      float_precision: 2
+      color: orange
+      opacity: 1
+      yaxis_id: kWh
+      unit: kW
+      extend_to: now
+      show:
+        legend_value: true
+        in_header: false
+      group_by:
+        func: avg
+        duration: 30m
+    - entity: sensor.lux_solar_output_live
+      transform: return x / 1000;
+      name: Solar (now)
+      type: line
+      stroke_width: 1
+      stroke_dash: 1
+      opacity: 0.2
+      float_precision: 2
+      color: Orange
+      yaxis_id: kWh
+      unit: kW
+      extend_to: now
+      show:
+        legend_value: true
+        in_header: false
+      group_by:
+        func: avg
+        duration: 120s
+    - entity: sensor.lux_grid_flow_live
+      transform: return x / 1000;
+      name: Export (avg30m)
+      type: line
+      stroke_width: 0.5
+      float_precision: 2
+      color: rgb(130,150,200)
+      opacity: 1
+      yaxis_id: kWh
+      unit: kW
+      extend_to: now
+      show:
+        legend_value: true
+        in_header: false
+      group_by:
+        func: avg
+        duration: 30m
+    - entity: sensor.solcast_pv_forecast_forecast_today
+      name: Forecast
+      color: Grey
+      opacity: 0.3
+      stroke_width: 0
+      type: area
+      extend_to: false
+      yaxis_id: kWh
+      show:
+        legend_value: false
+        in_header: false
+      data_generator: |
+        return entity.attributes.detailedForecast.map((entry) => {
+              return [new Date(entry.period_start), entry.pv_estimate];
+            });
+    - entity: sensor.solcast_pv_forecast_forecast_today
+      name: Forecast 10%
+      color: Grey
+      opacity: 0.3
+      stroke_width: 0
+      type: area
+      extend_to: false
+      yaxis_id: kWh
+      show:
+        legend_value: false
+        in_header: false
+      data_generator: |
+        return entity.attributes.detailedForecast.map((entry) => {
+              return [new Date(entry.period_start), entry.pv_estimate10];
+            });
+    - entity: sensor.lux_solar_output_daily
+      yaxis_id: header_only
+      name: Today Actual
+      stroke_width: 2
+      color: Orange
+      show:
+        legend_value: true
+        in_header: true
+        in_chart: false
+    - entity: sensor.solcast_pv_forecast_forecast_today
+      yaxis_id: header_only
+      name: Today Forecast
+      color: Grey
+      show:
+        legend_value: true
+        in_header: true
+        in_chart: false
+    - entity: sensor.solcast_pv_forecast_forecast_today
+      attribute: pv_estimate10
+      yaxis_id: header_only
+      name: Today Forecast 10%
+      color: Grey
+      opacity: 0.3
+      show:
+        legend_value: true
+        in_header: true
+        in_chart: false
+      data_generator: >
+        const sumPvEstimate10 = entity.attributes.detailedHourly.reduce((sum,
+        entry) => {
+          return sum + entry.pv_estimate10;
+        }, 0);
+
+        return [[new Date(), sumPvEstimate10]];
+    - entity: sensor.solcast_pv_forecast_forecast_remaining_today
+      yaxis_id: header_only
+      name: Remaining
+      color: Grey
+      show:
+        legend_value: true
+        in_header: true
+        in_chart: false
