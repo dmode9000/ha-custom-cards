@@ -1,5 +1,7 @@
 type: custom:apexcharts-card
 apex_config:
+  grid:
+    borderColor: "#424242"
   chart:
     height: 400px
   stroke:
