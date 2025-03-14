@@ -16,3 +16,7 @@ Builds upon the excellent work of:
 
 ## Inverter power and internal temperatures.
 ![image](https://github.com/user-attachments/assets/5be3c7a3-4e4e-4f04-b997-09033bc4bc21)
+
+## Actual and forecasted PV production.
+![image](https://github.com/user-attachments/assets/4d2434ae-2243-461e-9bb9-18671d4ce205)
+
