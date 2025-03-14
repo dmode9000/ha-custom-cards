@@ -5,6 +5,8 @@ header:
   show_states: true
   colorize_states: true
 apex_config:
+  grid:
+    borderColor: "#424242"
   chart:
     height: 350px
   tooltip:
