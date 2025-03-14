@@ -1,0 +1,68 @@
+type: custom:apexcharts-card
+apex_config:
+  chart:
+    height: 400px
+  stroke:
+    dashArray: 4
+  xaxis:
+    tickAmount: 7
+    labels:
+      format: ddd
+      hideOverlappingLabels: true
+      showDuplicatges: true
+      show: true
+experimental:
+  color_threshold: true
+graph_span: 11d
+span:
+  end: day
+show:
+  last_updated: true
+header:
+  show: true
+  show_states: true
+  colorize_states: true
+yaxis:
+  - min: 0
+    max: ~12
+    decimals: 0
+    apex_config:
+      tickAmount: 6
+series:
+  - entity: sensor.lux_solar_output_daily
+    float_precision: 0
+    show:
+      header_color_threshold: true
+      datalabels: true
+    type: column
+    opacity: 0.6
+    group_by:
+      func: max
+      duration: 1d
+    color_threshold:
+      - value: 15
+        color: hsl(30, 0%, 50%)
+      - value: 20
+        color: hsl(30, 1%, 50%)
+      - value: 25
+        color: hsl(30, 3%, 50%)
+      - value: 30
+        color: hsl(30, 5%, 50%)
+      - value: 35
+        color: hsl(30, 10%, 50%)
+      - value: 40
+        color: hsl(30, 40%, 50%)
+      - value: 45
+        color: hsl(30, 70%, 50%)
+      - value: 50
+        color: hsl(30, 100%, 50%)
+  - entity: sensor.solcast_pv_forecast_forecast_today
+    color: Gray
+    float_precision: 0
+    show:
+      header_color_threshold: true
+      datalabels: true
+    type: line
+    group_by:
+      func: last
+      duration: 1d
